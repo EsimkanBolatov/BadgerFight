@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  app:
+    image: 'sha256:7c7eadf88b1e6a14744f47c7d6292bd4b49076e70f688725777934655ee06205'
+    container_name: appb
+    expose:
+      - '8080'
+    ports:
+      - '8080:8080'
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=96KILLERe
+      - DB_URL=jdbc:postgresql://dbb:5432/badger_fight
+    depends_on:
+      - dbb
+  dbb:
+    image: 'postgres'
+    container_name: dbb
+    expose:
+      - '5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=96KILLERe
+
+
+
+
