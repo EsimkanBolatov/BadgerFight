@@ -3,15 +3,19 @@ package com.iptgroup.BadgerFight.controllers;
 import com.iptgroup.BadgerFight.entity.EnemyEntity;
 import com.iptgroup.BadgerFight.services.EnemyService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
+
+
 @Tag(name = "enemy_methods(EnemyController)")
+@Validated
 @RestController
-@RequestMapping("/api/enemies")  // URL для запросов
+@RequestMapping("/api/admin/enemies")  // URL для запросов
 public class EnemyController {
 
     @Autowired
@@ -39,8 +43,22 @@ public class EnemyController {
     // Удалить врага по ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEnemy(@PathVariable Long id) {
+        if (enemyService.getEnemyById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         enemyService.deleteEnemy(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EnemyEntity> updateEnemy(@PathVariable Long id, @Valid @RequestBody EnemyEntity enemyEntity) {
+        Optional<EnemyEntity> existingEnemy = enemyService.getEnemyById(id);
+        if (existingEnemy.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(enemyService.updateEnemy(id, enemyEntity));
+    }
+
+
 }
 

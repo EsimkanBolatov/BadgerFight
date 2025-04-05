@@ -6,4 +6,4 @@ COPY ${APPB_JAR} appb.jar
 
 ENTRYPOINT ["java", "-jar", "appb.jar"]
 
-EXPOSE 8080
+EXPOSE 8002

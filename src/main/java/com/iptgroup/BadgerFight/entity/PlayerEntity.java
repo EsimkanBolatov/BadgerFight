@@ -1,6 +1,7 @@
 package com.iptgroup.BadgerFight.entity;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "players")
@@ -10,31 +11,49 @@ public class PlayerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String name;
-    private int health;
-    private int attack;
 
-    //геттеры и сеттеры
-    public Long getId() {return id; }
-    public void setId(Long id) {this.id = id; }
+    private int level;
 
-    public String getName() {return name; }
-    public void setName(String name) {this.name = name;}
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private List<PlayerQuestProgressEntity> questProgress;
 
-    public  int getHealth() { return health; }
-    public void setHealth(int health) { this.health = health; }
-
-    public int getAttack() {return attack; }
-    public void setAttack(int attack) {this.attack = attack; }
-
-    //конструктор
-    public PlayerEntity() {}
-    public PlayerEntity(String name, int health, int attack){
-        this.name = name;
-        this.health = health;
-        this.attack = attack;
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity user;
+
+    // Геттеры и сеттеры
 }
+
