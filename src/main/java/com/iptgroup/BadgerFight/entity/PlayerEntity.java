@@ -18,6 +18,10 @@ public class PlayerEntity {
     @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     private List<PlayerQuestProgressEntity> questProgress;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity user;
+
     public Long getId() {
         return id;
     }
@@ -50,9 +54,8 @@ public class PlayerEntity {
         this.user = user;
     }
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
+    public List<PlayerQuestProgressEntity> getQuestProgress() {return  questProgress;}
+    public void setQuestProgress(List<PlayerQuestProgressEntity> questProgress) {this.questProgress = questProgress;}
 
     // Геттеры и сеттеры
 }

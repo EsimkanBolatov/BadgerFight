@@ -53,5 +53,8 @@ public class PlayerQuestProgressEntity {
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
+
+    public Long getId() {return id;}
+    public void setId(Long id) {this.id = id;}
 }
 

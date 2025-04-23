@@ -27,7 +27,7 @@ public class UserEntity implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;  // <--- Добавили роль пользователя
+    private Role role;  // роль пользователя
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -65,6 +65,7 @@ public class UserEntity implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private InventoryEntity inventory;
+
 
 
 }

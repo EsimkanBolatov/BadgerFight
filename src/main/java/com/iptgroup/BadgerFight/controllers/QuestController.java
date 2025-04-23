@@ -24,7 +24,7 @@ public class QuestController {
 
     // Начать квест
     @PostMapping("/start")
-    public String startQuest(@RequestParam Long playerId, @RequestParam Long questId) {
+    public String startQuest(@RequestBody Long playerId, @RequestBody Long questId) {
         //Логика начала квеста
         System.out.println("Start quest called with playerId=" + playerId + ", questId=" + questId);
         return questService.startQuest(playerId, questId);
@@ -32,7 +32,7 @@ public class QuestController {
 
     // Обновить прогресс квеста
     @PostMapping("/progress")
-    public String updateProgress(@RequestParam Long playerId, @RequestParam Long questId, @RequestParam String answer) {
+    public String updateProgress(@RequestBody Long playerId, @RequestBody Long questId, @RequestBody String answer) {
         return questService.updateQuestProgress(playerId, questId, answer);
     }
 
@@ -49,7 +49,7 @@ public class QuestController {
     }
 
     @PostMapping("/checkAnswer/{stepId}")
-    public ResponseEntity<String> checkAnswer(@PathVariable Long stepId, @RequestParam String answer) {
+    public ResponseEntity<String> checkAnswer(@PathVariable Long stepId, @RequestBody String answer) {
         return ResponseEntity.ok(questService.checkAnswer(stepId, answer));
     }
 }

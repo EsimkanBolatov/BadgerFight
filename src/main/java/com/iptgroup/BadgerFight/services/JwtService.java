@@ -13,9 +13,12 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "C233964F07634C8C38F608C60BD899D20AFD3A0C37213F5D"; // Используйте Base64-ключ
+    private static final String SECRET_KEY = "prWLypnNKuq6EPUncxciSOdhmzJo62mA8RaEqZiC9Sw="; // Используйте Base64-ключ
 
-
+    private Key getSignKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
     public String generateToken(String username, Map<String, Object> extraClaims) {
         return Jwts.builder()
                 .setClaims(extraClaims)
@@ -54,9 +57,5 @@ public class JwtService {
                 .getBody();
     }
 
-    private Key getSignKey() {
-        byte[] keyBytes = Base64.getDecoder().decode(SECRET_KEY);
-        return Keys.hmacShaKeyFor(keyBytes);
-    }
 }
 
