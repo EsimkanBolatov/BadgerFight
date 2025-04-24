@@ -1,11 +1,14 @@
 package com.iptgroup.BadgerFight.controllers;
 
 import com.iptgroup.BadgerFight.entity.PlayerEntity;
+import com.iptgroup.BadgerFight.repository.PlayerRepository;
 import com.iptgroup.BadgerFight.services.PlayerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user/players")
@@ -13,12 +16,18 @@ import org.springframework.web.bind.annotation.*;
 public class PlayerController {
 
     private final PlayerService playerService;
+    private final PlayerRepository playerRepository;
 
-    // POST: Создание игрока для пользователя
+    @GetMapping
+    public List<PlayerEntity> getAllPlayers() {
+        return playerRepository.findAll();
+    }
+
+        // POST: Создание игрока для пользователя
     @PostMapping("/{username}")
     public ResponseEntity<PlayerEntity> createPlayerForUser(
             @PathVariable String username,
-            @RequestParam String playerName) {
+            @RequestBody String playerName) {
         try {
             PlayerEntity newPlayer = playerService.createPlayerForUser(username, playerName);
             return ResponseEntity.status(HttpStatus.CREATED).body(newPlayer);

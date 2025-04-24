@@ -16,3 +16,9 @@ spring:
       resourceserver:
         jwt:
           secret: prWLypnNKuq6EPUncxciSOdhmzJo62mA8RaEqZiC9Sw=
+
+
+  eureka:
+    client:
+      service-url:
+        defaultZone: http://localhost:8004/eureka

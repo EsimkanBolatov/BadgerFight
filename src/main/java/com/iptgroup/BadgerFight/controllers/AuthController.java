@@ -1,6 +1,7 @@
 package com.iptgroup.BadgerFight.controllers;
 
 import com.iptgroup.BadgerFight.dto.AuthRequestDTO;
+import com.iptgroup.BadgerFight.entity.EnemyEntity;
 import com.iptgroup.BadgerFight.entity.UserEntity;
 import com.iptgroup.BadgerFight.repository.UserRepository;
 import com.iptgroup.BadgerFight.role.Role;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -82,6 +84,11 @@ public class AuthController {
     public ResponseEntity<String> registerAdmin(@RequestBody AuthRequestDTO request) {
         authenticationService.registerUser(request.getUsername(), request.getPassword(), Role.ADMIN);
         return ResponseEntity.ok("Admin registered successfully!");
+    }
+
+    @GetMapping
+    public List<UserEntity> getAllUsers() {
+        return userRepository.findAll();
     }
 
 }

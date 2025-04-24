@@ -1,25 +1,35 @@
 package com.iptgroup.BadgerFight.controllers;
 
 import com.iptgroup.BadgerFight.entity.QuestEntity;
+import com.iptgroup.BadgerFight.repository.QuestRepository;
 import com.iptgroup.BadgerFight.services.QuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user/quests")
 public class QuestController {
 
     private final QuestService questService;
+    private final QuestRepository questRepository;
 
     @Autowired
-    public QuestController(QuestService questService) {
+    public QuestController(QuestService questService, QuestRepository questRepository) {
         this.questService = questService;
+        this.questRepository = questRepository;
     }
 
     @GetMapping("/test")
     public String test() {
         return "QuestController is working!";
+    }
+
+    @GetMapping
+    public List<QuestEntity> getAllQuests() {
+        return  questRepository .findAll();
     }
 
     // Начать квест
